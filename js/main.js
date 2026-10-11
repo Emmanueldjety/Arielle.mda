@@ -43,23 +43,17 @@ setInterval(tick, 1000);
 
 /* ---------- Galerie + lightbox ---------- */
 let photoList = [], lbIndex = 0;
+let masonry = null;
 function renderGallery() {
   const real = CONFIG.photos.length > 0;
   photoList = real ? CONFIG.photos : [0, 1, 2, 3, 4, 5].map((i) => ({ src: placeholder(i), fr: t("photos_empty"), en: t("photos_empty") }));
-  $("gallery").innerHTML = "";
-  photoList.forEach((p, i) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<img src="${p.src}" alt="" loading="lazy"><div class="cap">${p[lang] || ""}</div>`;
-    card.onclick = () => openLb(i);
-    // effet 3D qui suit la souris
-    card.onmousemove = (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 18}deg) scale(1.05)`;
-    };
-    card.onmouseleave = () => (card.style.transform = "");
-    $("gallery").appendChild(card);
+  const caps = {}; photoList.forEach((p, i) => (caps[i] = p[lang] || ""));
+  if (masonry) { masonry.setCaptions(caps); return; } // changement de langue : pas de nouvelle animation
+  masonry = new Masonry($("gallery"), {
+    items: photoList.map((p, i) => ({ id: i, img: p.src, caption: caps[i] })),
+    ease: "power3.out", duration: 0.6, stagger: 0.08, animateFrom: "bottom",
+    scaleOnHover: true, hoverScale: 0.95, blurToFocus: true, colorShiftOnHover: true,
+    onItemClick: (it) => openLb(it.id),
   });
 }
 function openLb(i) { lbIndex = i; showLb(); $("lightbox").hidden = false; }
