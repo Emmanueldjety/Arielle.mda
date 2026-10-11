@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pour Arielle 💚</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Quicksand:wght@400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="petals" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <span class="logo">A 💚</span>
+    <nav>
+      <a href="#photos" data-i18n="nav_photos"></a>
+      <a href="#poems" data-i18n="nav_poems"></a>
+      <a href="#snaps" data-i18n="nav_snaps"></a>
+      <a href="#reasons" data-i18n="nav_reasons"></a>
+    </nav>
+    <button id="lang" aria-label="Language">EN</button>
+  </header>
+
+  <section class="hero">
+    <p class="kicker" data-i18n="hero_kicker"></p>
+    <h1>Arielle</h1>
+    <p class="typed" id="typed"></p>
+    <div class="counter" id="counter"></div>
+    <a class="scroll" href="#photos" aria-label="scroll">↓</a>
+  </section>
+
+  <section id="photos" class="section">
+    <h2 data-i18n="photos_title"></h2>
+    <p class="sub" data-i18n="photos_sub"></p>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section id="poems" class="section alt">
+    <h2 data-i18n="poems_title"></h2>
+    <div class="poem-wrap">
+      <button class="arrow" id="prevPoem" aria-label="prev">‹</button>
+      <article class="poem" id="poem"></article>
+      <button class="arrow" id="nextPoem" aria-label="next">›</button>
+    </div>
+    <div class="dots" id="poemDots"></div>
+  </section>
+
+  <section id="snaps" class="section">
+    <h2 data-i18n="snaps_title"></h2>
+    <p class="sub" data-i18n="snaps_sub"></p>
+    <div class="snaps" id="snapGrid"></div>
+  </section>
+
+  <section id="reasons" class="section alt">
+    <h2 data-i18n="reasons_title"></h2>
+    <p class="sub" data-i18n="reasons_sub"></p>
+    <div class="reason-box" id="reasonBox" data-i18n="reasons_idle"></div>
+    <button class="big" id="reasonBtn" data-i18n="reasons_btn"></button>
+  </section>
+
+  <section class="section final">
+    <button class="big pink" id="surprise" data-i18n="surprise_btn"></button>
+    <div class="letter" id="letter" hidden></div>
+  </section>
+
+  <footer data-i18n="footer"></footer>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose" aria-label="close">×</button>
+    <button class="arrow lb-prev" id="lbPrev">‹</button>
+    <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+    <button class="arrow lb-next" id="lbNext">›</button>
+  </div>
+
+  <script src="js/content.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
