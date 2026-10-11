@@ -41,10 +41,11 @@
     <h2 data-i18n="poems_title"></h2>
     <div class="poem-wrap">
       <button class="arrow" id="prevPoem" aria-label="prev">‹</button>
-      <article class="poem" id="poem"></article>
+      <div class="paper-box"><div id="paper"></div><article class="poem" id="poem" hidden></article></div>
       <button class="arrow" id="nextPoem" aria-label="next">›</button>
     </div>
     <div class="dots" id="poemDots"></div>
+    <p class="sub hint" data-i18n="paper_hint"></p>
   </section>
 
   <section id="snaps" class="section">
@@ -74,6 +75,8 @@
     <button class="arrow lb-next" id="lbNext">›</button>
   </div>
 
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/papercrumple.js"></script>
   <script src="js/content.js"></script>
   <script src="js/main.js"></script>
 </body>

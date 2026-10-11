@@ -75,13 +75,56 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") stepLb(1);
 });
 
-/* ---------- Poèmes ---------- */
-let poemIdx = 0;
+/* ---------- Poèmes (écrits sur un papier froissable) ---------- */
+let poemIdx = 0, paper = null, paperTried = false;
+const PW = 440, PH = 560;
+
+function wrapLine(ctx, line, max) {
+  const words = line.split(" "), out = []; let cur = "";
+  words.forEach((w) => {
+    const test = cur ? cur + " " + w : w;
+    if (ctx.measureText(test).width > max && cur) { out.push(cur); cur = w; } else cur = test;
+  });
+  out.push(cur); return out;
+}
+// dessine le poème sur un canvas transparent (le papier est ajouté par PaperCrumple)
+function drawPoem(p) {
+  const S = 2, c = document.createElement("canvas");
+  c.width = PW * S; c.height = PH * S;
+  const x = c.getContext("2d"); x.scale(S, S);
+  x.textAlign = "center"; x.textBaseline = "alphabetic";
+  // petit cadre vert
+  x.strokeStyle = "rgba(46,158,107,.35)"; x.lineWidth = 2; x.strokeRect(18, 18, PW - 36, PH - 36);
+  x.fillStyle = "#ff7eb6"; x.font = "600 44px 'Dancing Script', cursive";
+  x.fillText(p.title[lang], PW / 2, 88);
+  x.fillStyle = "#173326"; x.font = "italic 500 23px 'Playfair Display', serif";
+  const lines = p.text[lang].split("\n").flatMap((l) => wrapLine(x, l, PW - 96));
+  const lh = 34, top = 150 + Math.max(0, (PH - 300 - lines.length * lh) / 2);
+  lines.forEach((l, i) => x.fillText(l, PW / 2, top + i * lh));
+  x.font = "26px serif"; x.fillText("💚", PW / 2, PH - 38);
+  return c;
+}
+function initPaper() {
+  paper = new PaperCrumple($("paper"), {
+    width: PW, height: PH, sceneHeight: 460, alt: "Poème",
+    releaseBehavior: "restore", crumpleAmount: 0.85, crumpleDuration: 0.55, releaseDuration: 0.4,
+    foldCount: 6, foldSharpness: 0.6, wrinkleDepth: 0.65, creaseStrength: 0.18,
+    paperColor: "#f4f0e8", paperTexture: 0.08, draggable: true, returnToOrigin: true,
+    imageFit: "contain", roughness: 0.92, lightIntensity: 1.8, lightAngle: -35,
+    shadow: true, shadowOpacity: 0.16, dragRotation: 10, dragRadius: 180, rotation: 0, seed: 7, detail: 64,
+  });
+  if (!paper.ok) { paper = null; $("paper").hidden = true; $("poem").hidden = false; }
+}
 function renderPoem() {
   const p = POEMS[poemIdx];
-  const el = $("poem");
-  el.style.animation = "none"; el.offsetHeight; el.style.animation = "";
-  el.innerHTML = `<h3>${p.title[lang]}</h3>${p.text[lang]}`;
+  if (!paper && !paperTried && window.PaperCrumple) { paperTried = true; initPaper(); }
+  if (paper) {
+    paper.setSource(drawPoem(p));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => paper && paper.setSource(drawPoem(POEMS[poemIdx])));
+  } else {
+    const el = $("poem"); el.hidden = false;
+    el.innerHTML = `<h3>${p.title[lang]}</h3>${p.text[lang]}`;
+  }
   $("poemDots").innerHTML = POEMS.map((_, i) => `<i class="${i === poemIdx ? "on" : ""}" data-i="${i}"></i>`).join("");
   $("poemDots").querySelectorAll("i").forEach((d) => (d.onclick = () => { poemIdx = +d.dataset.i; renderPoem(); }));
 }

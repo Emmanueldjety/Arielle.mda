@@ -64,3 +64,8 @@ footer{text-align:center;padding:30px;background:var(--green-d);color:var(--gree
 .heart-fx{position:fixed;font-size:1.6rem;pointer-events:none;z-index:200;animation:rise 1.8s ease-out forwards}
 @keyframes rise{to{transform:translateY(-70vh) rotate(30deg);opacity:0}}
 @media(max-width:640px){.topbar nav{display:none}}
+
+.paper-box{flex:1;max-width:460px;min-width:0}
+#paper{margin:0 auto;width:100%}
+#paper canvas{display:block;user-select:none;-webkit-user-select:none}
+.hint{margin-top:14px;margin-bottom:0}
