@@ -7,12 +7,19 @@ const CONFIG = {
   // Photos : mets tes fichiers dans /photos et ajoute une ligne par photo.
   // fr/en = légende qui apparaît au survol.
   photos: [
-    // { src: "photos/nous1.jpg", fr: "Notre premier selfie", en: "Our first selfie" },
+    { src: "photos/photo1.jpg", fr: "Ce sourire 💚", en: "That smile 💚" },
+    { src: "photos/photo2.jpg", fr: "Reine du bubble tea 🧋", en: "Bubble tea queen 🧋" },
+    { src: "photos/photo3.jpg", fr: "Mon adorable folle 😘", en: "My adorable goofball 😘" },
+    { src: "photos/photo4.jpg", fr: "Ce regard…", en: "That look…" },
   ],
 
   // Vidéos Snap : exporte-les en .mp4 et mets-les dans /videos
   videos: [
-    // "videos/snap1.mp4",
+    "videos/snap1.mp4",
+    "videos/snap2.mp4",
+    "videos/snap3.mp4",
+    "videos/snap4.mp4",
+    "videos/snap5.mp4",
   ],
 };
 
